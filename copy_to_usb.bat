@@ -1,0 +1,1 @@
+copy dist\kernel.elf E:\boot\kernel.elf
