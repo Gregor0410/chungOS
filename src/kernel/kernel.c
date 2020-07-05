@@ -11,14 +11,22 @@
 #include "interrupts/interrupts.h"
 
 void main(){
+    stdin.writeable=false;
+    stdin.readable=false;
     set_cursor(0);
     clear_screen();
     initialize_gdt();
     initialize_idt();
     init_timer();
+    timer_countdown(0);
     keyboard_init();
-    printf("Timer Initialised\n");
-    timer_countdown(1e9);
+    while(1){
+        char buf[80];
+        gets(buf);
+        if(strcmp(buf,"countdown")==0){
+            timer_countdown(1e9);
+        } 
+    }
     while(1){
         asm("hlt");
     }

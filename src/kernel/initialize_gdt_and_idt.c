@@ -4,8 +4,7 @@
 #include "bin/bin.h"
 #include "../drivers/ports.h"
 #include "interrupts/interrupts.h"
-void encode_gdt_entry(struct gdt_entry *target, struct gdt_abstract source)
-{
+void encode_gdt_entry(struct gdt_entry *target, struct gdt_abstract source){
     // Check the limit to make sure that it can be encoded
     if (source.limit > 65536) {
         // Adjust granularity if required

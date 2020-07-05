@@ -2,8 +2,11 @@
 #define KERNEL_GLOBALS
 #include <stdint.h>
 #include <stdbool.h>
-struct stdin {
-    bool readable;
-    char character;
-};
+typedef struct {
+    volatile bool writeable;
+    volatile bool readable;
+    volatile char character;
+    char* dest;
+}char_stream_t;
+char_stream_t stdin;
 #endif
