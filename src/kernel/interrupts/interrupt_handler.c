@@ -7,10 +7,11 @@ isr_t handlers[256];
 
 void isr_handler(registers_t r){
     printf("Interrupt no %x, error code %x\n",r.int_no,r.err_code);
-    if(r.int_no==0xd){
-        printf("EIP: %x\nSS: %x\n",r.eip,r.ss);
-        
-    }
+    printf("Caller registers\n");
+    printf("EIP: %x\nESP: %x\n",r.eip,r.useresp);
+    int esp;
+    asm("mov %%esp,%%eax":"=a"(esp));
+    printf("Handler ESP: %x\n",esp);
 }
 void register_handler(int no,isr_t handler){
     handlers[no] = handler;
