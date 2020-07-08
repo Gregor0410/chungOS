@@ -10,7 +10,7 @@
 #include "bin/bin.h"
 #include "interrupts/interrupts.h"
 
-void main(){
+void kernel_main(){
     stdin.writeable=false;
     stdin.readable=false;
     set_cursor(0);

@@ -16,10 +16,15 @@ SECTIONS
 	.text BLOCK(4K) : ALIGN(4K)
 	{
 		*(.multiboot)
+		kernel/bootstrap.c(.text)
+	}
+	.=0xc0000000;
+	kernel_start = .;
+	/* Read-only data. */
+	.text BLOCK(4K): ALIGN(4K)
+	{
 		*(.text)
 	}
- 
-	/* Read-only data. */
 	.rodata BLOCK(4K) : ALIGN(4K)
 	{
 		*(.rodata)
@@ -37,6 +42,7 @@ SECTIONS
 		*(COMMON)
 		*(.bss)
 	}
+	kernel_end = .;
 	/* The compiler may produce other sections, by default it will put them in
 	   a segment with the same name. Simply add stuff here as needed. */
 }

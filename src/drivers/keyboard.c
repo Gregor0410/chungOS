@@ -61,7 +61,6 @@ void keyboard_handler(registers_t r){
     int scancode = port_read_byte(0x60);
     if(scancode<0x80){
         if(extended){
-            //printf("Extended Scancode: %x\nKeycode: %x\nKey: %s\n",scancode,keycodes[scancode],scancode_table[scancode]);
             extended=false;
         }else{
             uint8_t keycode = keycodes[scancode];
@@ -124,5 +123,6 @@ uint8_t keyboard_send_data_command(uint8_t command, uint8_t data){
 
 void keyboard_init(){
     register_handler(33,keyboard_handler);
+    keyboard_send_data_command(0xf3,0b00100111);
 }
 

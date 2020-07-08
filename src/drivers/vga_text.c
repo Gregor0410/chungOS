@@ -3,6 +3,7 @@
 #include "../libc/string/string.h"
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
+#define VGA_RAM 0xb8000
 void vga_scroll();
 void clear_row();
 
@@ -27,14 +28,14 @@ void set_cursor(uint16_t cursor){
 
 void vga_scroll(){
     uint8_t buf[VGA_HEIGHT*VGA_WIDTH*2];
-    memcpy(buf,(void*)0xb8000,sizeof buf); //store vram into buffer
-    memcpy((void*)0xb8000,buf+(VGA_WIDTH*2),(sizeof buf)-(VGA_WIDTH*2)); //write the buffer offset by one line
+    memcpy(buf,(void*)VGA_RAM,sizeof buf); //store vram into buffer
+    memcpy((void*)VGA_RAM,buf+(VGA_WIDTH*2),(sizeof buf)-(VGA_WIDTH*2)); //write the buffer offset by one line
     set_cursor(get_cursor()-VGA_WIDTH);
     //clear last line
     clear_row(VGA_HEIGHT-1);
 }
 void write_char_at_cursor(char text,uint8_t color){
-    uint8_t *vga = (uint8_t*)0xb8000;
+    uint8_t *vga = (uint8_t*)VGA_RAM;
     uint16_t cursor = get_cursor();
     uint32_t vga_offset = cursor *2;
     vga[vga_offset] = text;
@@ -42,7 +43,7 @@ void write_char_at_cursor(char text,uint8_t color){
 }
 
 void write_char_at_location(char text,uint8_t color,uint16_t position){
-    uint8_t *vga = (uint8_t*)0xb8000;
+    uint8_t *vga = (uint8_t*)VGA_RAM;
     uint32_t vga_offset = position *2;
     vga[vga_offset] = text;
     vga[vga_offset+1]=color;
