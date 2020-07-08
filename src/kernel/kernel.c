@@ -23,9 +23,6 @@ void main(){
     while(1){
         char buf[80];
         gets(buf);
-        if(strcmp(buf,"countdown")==0){
-            timer_countdown(1e9);
-        } 
     }
     while(1){
         asm("hlt");

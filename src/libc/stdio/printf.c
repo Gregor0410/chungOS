@@ -6,8 +6,7 @@
 
 char* hex_to_str(int hex, char* dest){
     char str[] = "0x00000000";
-    int i;
-    for(i=0;i<8;i++){
+    for(int i=0;i<8;i++){
         char digit = (hex&0xf)+0x30;
         if(digit>0x39){
             //digit is more than hex 9
@@ -18,7 +17,16 @@ char* hex_to_str(int hex, char* dest){
     }
     return strcpy(dest,str);
 }
-
+char* dec_to_str(int dec,char* dest){
+    if(dec==0)return strcpy(dest,"0");
+    char str[]="0000000000";
+    int i;
+    for(i=9;dec>0;i--){
+        str[i]=(dec%10)+0x30;
+        dec /= 10;
+    }
+    return strcpy(dest,str+i+1);
+}
 int print(char* str,size_t len){
     size_t i;
     for (i=0;i<len;i++){
@@ -39,8 +47,14 @@ int printf(const char *format, ...){
                 format+=2; //dont write the format character
             }else if(format[1]=='x'){
                 int hex = va_arg(parameters,int);
-                char buf[10];
+                char buf[11];
                 char* str = hex_to_str(hex,buf);
+                written+=print(str,strlen(str));
+                format+=2; //dont write the format character
+            }else if(format[1]=='d'){
+                int dec = va_arg(parameters,int);
+                char buf[11];
+                char* str = dec_to_str(dec,buf);
                 written+=print(str,strlen(str));
                 format+=2; //dont write the format character
             }else{
