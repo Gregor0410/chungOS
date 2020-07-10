@@ -20,6 +20,7 @@ void kernel_main(){
     init_timer();
     timer_countdown(0);
     keyboard_init();
+    printf("%x\n",*(int*)0xffc00000);
     while(1){
         char buf[80];
         gets(buf);

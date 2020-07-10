@@ -84,5 +84,7 @@ void load_gdt(struct gdt_entry *GDT,uint16_t size);
 void load_idt(struct idt_entry* IDT,uint16_t size);
 void test_int();
 struct tss TSS;
+struct gdt_entry GDT[4];
+struct idt_entry IDT[256];
 struct descriptor gdt_descriptor;
 #endif

@@ -12,6 +12,7 @@ void isr_handler(registers_t r){
     int esp;
     asm("mov %%esp,%%eax":"=a"(esp));
     printf("Handler ESP: %x\n",esp);
+    asm("hlt");
 }
 void register_handler(int no,isr_t handler){
     handlers[no] = handler;
