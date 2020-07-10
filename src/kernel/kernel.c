@@ -16,10 +16,13 @@ void kernel_main(){
     set_cursor(0);
     clear_screen();
     initialize_gdt();
+    unmap_identity();
     initialize_idt();
+    register_handlers();
     init_timer();
     timer_countdown(0);
     keyboard_init();
+    hexdump((int *)GDT,12);
     while(1){
         char buf[80];
         gets(buf);
@@ -27,4 +30,10 @@ void kernel_main(){
     while(1){
         asm("hlt");
     }
+}
+
+void unmap_identity(){
+    int *boot_page_ptr = &boot_page_directory[0];
+    *boot_page_ptr = 0;
+    asm("mov %cr3,%eax\n" "mov %eax,%cr3");
 }

@@ -41,7 +41,6 @@ void encode_idt_entry(struct idt_entry *target, struct idt_abstract source){
 
 
 void initialize_gdt(){
-    struct gdt_entry *GDT = GDT_LOCATION;
     struct gdt_abstract null_descriptor = {.base=0x0,.limit=0x0, .type=0x0};
     struct gdt_abstract code_seg = {.base=0x0,.limit=0xffffffff, .type=0x9a};
     struct gdt_abstract data_seg = {.base=0x0,.limit=0xffffffff, .type=0x92};
@@ -57,7 +56,6 @@ void test_int_c(){
     printf("Interrupt\n");
 }
 void initialize_idt(){
-    struct idt_entry *IDT = IDT_LOCATION;
     encode_idt_entry(&IDT[0],(struct idt_abstract){.offset=&isr0,.type=0x8e,.gdt_offset=0x08});
     encode_idt_entry(&IDT[1],(struct idt_abstract){.offset=&isr1,.type=0x8e,.gdt_offset=0x08});
     encode_idt_entry(&IDT[2],(struct idt_abstract){.offset=&isr2,.type=0x8e,.gdt_offset=0x08});
@@ -119,5 +117,13 @@ void initialize_idt(){
     encode_idt_entry(&IDT[45],(struct idt_abstract){.offset=&irq13,.type=0x8e,.gdt_offset=0x08});
     encode_idt_entry(&IDT[46],(struct idt_abstract){.offset=&irq14,.type=0x8e,.gdt_offset=0x08});
     encode_idt_entry(&IDT[47],(struct idt_abstract){.offset=&irq15,.type=0x8e,.gdt_offset=0x08});
+    for(int i=0;i<256;i++){
+        handlers[i]=default_handler;
+    }
     load_idt(IDT,(NO_INTERRUPTS*8)-1);
+}
+
+void register_handlers(){
+    //Register interrupt handlers
+    register_handler(0xe,page_fault_handler);
 }

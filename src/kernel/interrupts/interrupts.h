@@ -1,6 +1,7 @@
 #ifndef INTERRUPTS_H
 #define INTERRUPTS_H
 #include "../kernel.h"
+#include "../allocator/allocator.h"
 #define NO_INTERRUPTS 48
 void isr0();
 void isr1();
@@ -51,5 +52,7 @@ void irq13();
 void irq14();
 void irq15();
 typedef void (*isr_t)(registers_t);
+isr_t handlers[256];
+void default_handler(registers_t r);
 void register_handler(int no, isr_t handler);
 #endif
