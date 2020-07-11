@@ -18,16 +18,11 @@ void kernel_main(){
     initialize_gdt();
     unmap_identity();
     initialize_idt();
+    refresh_bitmap();
     register_handlers();
     init_timer();
     timer_countdown(0);
     keyboard_init();
-<<<<<<< HEAD
-    printf("%x\n",*(int*)0xffc00000);
-=======
-    printf("%x\n",*(int *)&boot_page_directory[1023]);
-    printf("Physical address of kernel_main is: %x\n",get_phys_addr(0x00000000));
->>>>>>> Paging
     while(1){
         char buf[80];
         gets(buf);
@@ -38,7 +33,7 @@ void kernel_main(){
 }
 
 void unmap_identity(){
-    int *boot_page_ptr = &boot_page_directory[0];
+    int *boot_page_ptr = &kernel_page_directory[0];
     *boot_page_ptr = 0;
     asm("mov %cr3,%eax\n" "mov %eax,%cr3");
 }

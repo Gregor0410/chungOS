@@ -1,5 +1,5 @@
 global _loader                          ; Make entry point visible to linker.
-global boot_page_directory
+global kernel_page_directory
 extern kernel_main                            ; _main is defined elsewhere
  
 ; setting up the Multiboot header - see GRUB docs for details
@@ -19,7 +19,7 @@ KERNEL_PAGE_NUMBER equ (KERNEL_VIRTUAL_BASE >> 22)  ; Page directory index of ke
  
 section .data
 align 0x1000
-boot_page_directory:
+kernel_page_directory:
     times 0x1000 db 0
 boot_page_table1:
 	times 0x1000 db 0
@@ -40,14 +40,14 @@ global loader
  
 _loader:
     ; set up page directory with identity map and kernel higher half map
-    mov ecx, (boot_page_directory - KERNEL_VIRTUAL_BASE)
+    mov ecx, (kernel_page_directory - KERNEL_VIRTUAL_BASE)
 	mov cr3, ecx                                        ; Load Page Directory Base Register.
 	mov eax,(boot_page_table1- KERNEL_VIRTUAL_BASE)
 	or eax,0x3
 	mov [ecx],eax
 	add ecx,(KERNEL_PAGE_NUMBER*4)
 	mov [ecx],eax
-	mov ecx,(boot_page_directory - KERNEL_VIRTUAL_BASE) ; map last PDE to the page directory
+	mov ecx,(kernel_page_directory - KERNEL_VIRTUAL_BASE) ; map last PDE to the page directory
 	mov eax,ecx
 	add ecx,(1023*4) 
 	or eax,0x3

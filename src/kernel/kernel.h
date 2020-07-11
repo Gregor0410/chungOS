@@ -87,13 +87,8 @@ void register_handlers();
 void load_gdt(struct gdt_entry *GDT,uint16_t size);
 void load_idt(struct idt_entry* IDT,uint16_t size);
 struct tss TSS;
-<<<<<<< HEAD
-struct gdt_entry GDT[4];
-struct idt_entry IDT[256];
-=======
 struct idt_entry IDT[255];
 struct gdt_entry GDT[4];
->>>>>>> Paging
 struct descriptor gdt_descriptor;
-struct page_directory_entry boot_page_directory[1024]; 
+struct page_directory_entry kernel_page_directory[1024]; 
 #endif

@@ -1,4 +1,4 @@
+/dist/**/*
+/iso/**/*
 /dist
-/iso/boot
-/dist/os.iso
-/dist/kernel.elf
+/iso

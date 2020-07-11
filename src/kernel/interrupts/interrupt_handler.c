@@ -5,17 +5,7 @@
 
 
 void isr_handler(registers_t r){
-<<<<<<< HEAD
-    printf("Interrupt no %x, error code %x\n",r.int_no,r.err_code);
-    printf("Caller registers\n");
-    printf("EIP: %x\nESP: %x\n",r.eip,r.useresp);
-    int esp;
-    asm("mov %%esp,%%eax":"=a"(esp));
-    printf("Handler ESP: %x\n",esp);
-    asm("hlt");
-=======
     handlers[r.int_no](r);
->>>>>>> Paging
 }
 void register_handler(int no,isr_t handler){
     handlers[no] = handler;
