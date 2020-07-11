@@ -1,4 +1,4 @@
-C_SOURCES = $(wildcard src/kernel/*.c src/kernel/bin/*.c src/drivers/*.c src/libc/*/*.c src/kernel/interrupts/*.c)
+C_SOURCES = $(wildcard src/kernel/*.c src/kernel/bin/*.c src/drivers/*.c src/libc/*/*.c src/kernel/interrupts/*.c src/kernel/allocator/*.c)
 ASM_SOURCES = $(wildcard src/kernel/*.asm src/kernel/interrupts/*.asm)
 DIRS = $(wildcard src/kernel src/boot)
 HEADERS = $(wildcard src/kernel/*.h src/kernel/bin/*.h src/drivers/*.h src/libc/*/*.c) 

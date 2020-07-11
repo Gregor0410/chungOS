@@ -1,11 +1,14 @@
 #ifndef KERNEL_H
 #define KERNEL_H
-#define GDT_LOCATION 0x0000
-#define IDT_LOCATION 0x1000
 #include <stdint.h>
 struct descriptor{
     uint16_t size;
     uint32_t address; 
+}__attribute__((packed));
+struct page_directory_entry{
+    uint8_t flags;
+    uint8_t address_low;
+    uint16_t address_high;
 };
 struct gdt_entry{
     uint16_t limit_low;
@@ -14,7 +17,7 @@ struct gdt_entry{
     uint8_t access_byte;
     uint8_t limit_high_and_flags;
     uint8_t base_high;
-};
+}__attribute__((packed));
 struct gdt_abstract{
     uint32_t base;
     uint32_t limit;
@@ -80,11 +83,17 @@ typedef struct{
 } registers_t;
 void initialize_gdt();
 void initialize_idt();
+void register_handlers();
 void load_gdt(struct gdt_entry *GDT,uint16_t size);
 void load_idt(struct idt_entry* IDT,uint16_t size);
-void test_int();
 struct tss TSS;
+<<<<<<< HEAD
 struct gdt_entry GDT[4];
 struct idt_entry IDT[256];
+=======
+struct idt_entry IDT[255];
+struct gdt_entry GDT[4];
+>>>>>>> Paging
 struct descriptor gdt_descriptor;
+struct page_directory_entry boot_page_directory[1024]; 
 #endif

@@ -15,11 +15,11 @@ void encode_gdt_entry(struct gdt_entry *target, struct gdt_abstract source){
     }
  
     // Encode the limit
-    target->limit_low = (source.limit & 0xFF) | ((source.limit >> 8) & 0xFF);
+    target->limit_low = source.limit & 0xFFFF;
     target->limit_high_and_flags |= (source.limit >> 16) & 0xF;
  
     // Encode the base 
-    target->base_low = (source.base & 0xFF) | ((source.base >> 8) & 0xFF);
+    target->base_low = source.base & 0xFFFF;
     target->base_mid = (source.base >> 16) & 0xFF;
     target->base_high = (source.base >> 24) & 0xFF;
  
@@ -117,5 +117,13 @@ void initialize_idt(){
     encode_idt_entry(&IDT[45],(struct idt_abstract){.offset=&irq13,.type=0x8e,.gdt_offset=0x08});
     encode_idt_entry(&IDT[46],(struct idt_abstract){.offset=&irq14,.type=0x8e,.gdt_offset=0x08});
     encode_idt_entry(&IDT[47],(struct idt_abstract){.offset=&irq15,.type=0x8e,.gdt_offset=0x08});
+    for(int i=0;i<256;i++){
+        handlers[i]=default_handler;
+    }
     load_idt(IDT,(NO_INTERRUPTS*8)-1);
+}
+
+void register_handlers(){
+    //Register interrupt handlers
+    register_handler(0xe,page_fault_handler);
 }
