@@ -15,11 +15,11 @@ void encode_gdt_entry(struct gdt_entry *target, struct gdt_abstract source){
     }
  
     // Encode the limit
-    target->limit_low = (source.limit & 0xFF) | ((source.limit >> 8) & 0xFF);
+    target->limit_low = source.limit & 0xFFFF;
     target->limit_high_and_flags |= (source.limit >> 16) & 0xF;
  
     // Encode the base 
-    target->base_low = (source.base & 0xFF) | ((source.base >> 8) & 0xFF);
+    target->base_low = source.base & 0xFFFF;
     target->base_mid = (source.base >> 16) & 0xFF;
     target->base_high = (source.base >> 24) & 0xFF;
  

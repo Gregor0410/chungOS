@@ -4,7 +4,7 @@
 struct descriptor{
     uint16_t size;
     uint32_t address; 
-};
+}__attribute__((packed));
 struct page_directory_entry{
     uint8_t flags;
     uint8_t address_low;
@@ -17,7 +17,7 @@ struct gdt_entry{
     uint8_t access_byte;
     uint8_t limit_high_and_flags;
     uint8_t base_high;
-};
+}__attribute__((packed));
 struct gdt_abstract{
     uint32_t base;
     uint32_t limit;

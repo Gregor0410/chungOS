@@ -1,3 +1,4 @@
 break get_phys_addr
 break default_handler
+break encode_gdt_entry
 

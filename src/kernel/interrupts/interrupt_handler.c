@@ -21,6 +21,6 @@ void irq_handler(registers_t r) {
 void default_handler(registers_t r){
     printf("Int no %x\n",r.int_no);
     printf("Error code: %x\n",r.err_code);
-    printf("EIP: %x",r.eip);
+    printf("EIP: %x,CS: %x, DS: %x",r.eip,r.cs,r.ds);
     asm("hlt");
 }

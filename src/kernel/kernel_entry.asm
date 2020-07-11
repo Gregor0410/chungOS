@@ -48,8 +48,8 @@ _loader:
 	add ecx,(KERNEL_PAGE_NUMBER*4)
 	mov [ecx],eax
 	mov ecx,(boot_page_directory - KERNEL_VIRTUAL_BASE) ; map last PDE to the page directory
-	mov eax,(boot_page_table1-KERNEL_VIRTUAL_BASE)
-	add ecx,(1022*4) 
+	mov eax,ecx
+	add ecx,(1023*4) 
 	or eax,0x3
 	mov [ecx],eax
 	;set up the page table

@@ -22,7 +22,8 @@ void kernel_main(){
     init_timer();
     timer_countdown(0);
     keyboard_init();
-    hexdump((int *)GDT,12);
+    printf("%x\n",*(int *)&boot_page_directory[1023]);
+    printf("Physical address of kernel_main is: %x\n",get_phys_addr(0x00000000));
     while(1){
         char buf[80];
         gets(buf);
