@@ -90,5 +90,7 @@ struct tss TSS;
 struct idt_entry IDT[255];
 struct gdt_entry GDT[4];
 struct descriptor gdt_descriptor;
-struct page_directory_entry kernel_page_directory[1024]; 
+struct page_directory_entry kernel_page_directory[1024];
+extern uint32_t _kernel_start[];
+extern uint32_t _kernel_end[];
 #endif

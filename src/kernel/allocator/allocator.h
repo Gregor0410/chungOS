@@ -9,5 +9,7 @@ void *get_phys_addr(void* address);
 bool pde_present(uint32_t pd_index);
 bool pte_present(uint32_t pd_index, uint32_t pt_index);
 void refresh_bitmap();
-uint32_t memory_bitmap[NUM_PAGES/8];
+void *get_free_page();
+uint32_t memory_bitmap[NUM_PAGES/32];
+uint32_t prev_pointer;
 #endif

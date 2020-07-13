@@ -18,11 +18,12 @@ void kernel_main(){
     initialize_gdt();
     unmap_identity();
     initialize_idt();
-    refresh_bitmap();
     register_handlers();
+    refresh_bitmap();
     init_timer();
     timer_countdown(0);
     keyboard_init();
+    printf("%x\n",_kernel_end);
     while(1){
         char buf[80];
         gets(buf);

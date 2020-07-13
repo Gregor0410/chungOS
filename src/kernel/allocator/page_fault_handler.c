@@ -5,5 +5,6 @@ void page_fault_handler(registers_t r){
     asm("mov %%cr2,%%eax":"=a"(fault_address));
     printf("Page fault at address %x\n",fault_address);
     printf("Error code: %x",r.err_code);
+    printf("EIP: %x",r.eip);
     asm("hlt");
 }

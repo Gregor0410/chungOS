@@ -4,14 +4,27 @@
 
 void refresh_bitmap(){
     //iterates through virtual memory and sets the corresponding bits of the mapped physical addresses in the bitmap
+    prev_pointer=0;
     for(uint32_t page=0;page<=0xfffff;page++){
         uint32_t phys_addr = (uint32_t)get_phys_addr(page*0x1000);
         if(phys_addr!=-1){
             //virtual address is mapped
             //set the corresponding bit
-            memory_bitmap[page] |= 1<<(page%8);
+            uint32_t phys_page = ((phys_addr>>12)&0xfff);
+            memory_bitmap[phys_page/32] |= 1<<(phys_page%32);
         }
     }
+}
+
+void *get_free_page(){
+    for(uint32_t i=prev_pointer;i<NUM_PAGES;i++){
+        if(((memory_bitmap[i/32])&(1<<(i%32)))<1){
+            //page is free
+            prev_pointer=i-1;
+            return (void *)(i<<12);
+        }
+    }
+    return (void *)-1;
 }
 
 
