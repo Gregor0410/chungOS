@@ -1,5 +1,5 @@
 #ifndef STDIO_H
-#define STDIO_H
+#define STDIO_H 1
 void puts(char* string);
 char *gets(char* str);
 void putchar(char c);

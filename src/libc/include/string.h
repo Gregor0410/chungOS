@@ -1,5 +1,5 @@
 #ifndef STRING_H
-#define STRING_H
+#define STRING_H 1
 #include <stddef.h>
 void *memcpy(void *dest, const void *src, size_t len);
 size_t strlen(const char* str);

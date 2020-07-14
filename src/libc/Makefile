@@ -1,9 +1,10 @@
-C_SOURCES = $(wildcard stdio/*.c string/*.h stdlib/*.c)
+C_SOURCES = $(wildcard stdio/*.c string/*.c stdlib/*.c)
 HEADERS = $(wildcard include/*.h) 
 # Nice syntax for file extension replacement
 OBJ = ${C_SOURCES:.c=.o}
+PROJECT_DIR = $(shell pwd)/../..
 # Change this if your cross-compiler is somewhere else
-CC = i686-elf-gcc --sysroot=/mnt/d/Documents/Code/chungusOS/src/sysroot -isystem=/usr/include
+CC = i686-elf-gcc --sysroot=${PROJECT_DIR}/src/sysroot -isystem=/usr/include
 GDB = i686-elf-gdb
 AR = i686-elf-ar
 # -g: Use debugging symbols in gcc

@@ -21,8 +21,8 @@ dist/os.iso: dist/kernel.elf
 # '--oformat binary' deletes all symbols as a collateral, so we don't need
 # to 'strip' them manually on this case
 dist/kernel.elf: ${ASM_OBJ} ${OBJ}
-	${LD} -T src/link.ld  $^ -o $@ -lk  --verbose
-	# ${CC} -T src/link.ld -o $@ ${CFLAGS} $^ -lk --verbose
+	$(CC) -T src/link.ld -Xlinker --verbose -o $@ $(CFLAGS) $^ -nostdlib -lk -lgcc
+	# ${LD} -T src/link.ld  $^ -o $@ -lk -nostdlib -lgcc --verbose
 
 run: os-image.bin
 	qemu-system-i386 -fda os-image.bin
