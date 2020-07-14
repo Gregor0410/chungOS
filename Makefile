@@ -1,15 +1,17 @@
-C_SOURCES = $(wildcard src/kernel/*.c src/kernel/bin/*.c src/drivers/*.c src/libc/*/*.c src/kernel/interrupts/*.c src/kernel/allocator/*.c)
+C_SOURCES = $(wildcard src/kernel/*.c src/kernel/bin/*.c src/drivers/*.c src/kernel/interrupts/*.c src/kernel/allocator/*.c)
 ASM_SOURCES = $(wildcard src/kernel/*.asm src/kernel/interrupts/*.asm)
 DIRS = $(wildcard src/kernel src/boot)
 HEADERS = $(wildcard src/kernel/*.h src/kernel/bin/*.h src/drivers/*.h src/libc/*/*.c) 
 # Nice syntax for file extension replacement
 OBJ = ${C_SOURCES:.c=.o}
 ASM_OBJ = ${ASM_SOURCES:.asm=.o}
+PROJECT_DIR = $(shell pwd)
 # Change this if your cross-compiler is somewhere else
-CC = /usr/local/i386elfgcc/bin/i386-elf-gcc
-GDB = /usr/local/i386elfgcc/bin/i386-elf-gdb
+CC =i686-elf-gcc --sysroot=${PROJECT_DIR}/src/sysroot -isystem=/usr/include
+GDB = i686-elf-gdb
+LD = i686-elf-ld --sysroot=${PROJECT_DIR}/src/sysroot
 # -g: Use debugging symbols in gcc
-CFLAGS = -g
+CFLAGS = -g  -O1 -std=gnu99 -Wall -Wextra -ffreestanding -Iinclude
 
 # First rule is run by default
 dist/os.iso: dist/kernel.elf
@@ -19,7 +21,8 @@ dist/os.iso: dist/kernel.elf
 # '--oformat binary' deletes all symbols as a collateral, so we don't need
 # to 'strip' them manually on this case
 dist/kernel.elf: ${ASM_OBJ} ${OBJ}
-	/usr/local/i386elfgcc/bin/i386-elf-ld -T src/link.ld  $^ -o $@
+	${LD} -T src/link.ld  $^ -o $@ -lk  --verbose
+	# ${CC} -T src/link.ld -o $@ ${CFLAGS} $^ -lk --verbose
 
 run: os-image.bin
 	qemu-system-i386 -fda os-image.bin
@@ -33,7 +36,7 @@ debug: os-image.bin kernel.elf
 # Generic rules for wildcards
 # To make an object, always compile from its .c
 %.o: %.c ${HEADERS}
-	${CC} ${CFLAGS} -O1 -std=gnu99 -Wall -Wextra -ffreestanding -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@ 
 
 %.o: %.asm
 	nasm -felf32 $< -o $@

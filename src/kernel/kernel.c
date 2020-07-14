@@ -1,9 +1,9 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "../libc/string/string.h"
+#include <string.h>
 #include "../drivers/keyboard.h"
-#include "../libc/stdio/stdio.h"
+#include <stdio.h>
 #include "kernel_globals.h"
 #include "kernel.h"
 #include "timer.h"
