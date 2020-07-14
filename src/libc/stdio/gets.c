@@ -1,6 +1,6 @@
 #include "../../kernel/kernel_globals.h"
 #include "../../drivers/vga_text.h"
-#include "stdio.h"
+#include "../include/stdio.h"
 char *gets(char *str){
     char read_character=0;
     int i = 0;

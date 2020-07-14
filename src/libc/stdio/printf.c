@@ -1,7 +1,7 @@
-#include "stdio.h"
+#include "../include/stdio.h"
 #include <stdint.h>
 #include <stdarg.h>
-#include "../string/string.h"
+#include "../include/string.h"
 #include <stddef.h>
 
 char* hex_to_str(int hex, char* dest){

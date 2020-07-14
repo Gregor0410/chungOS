@@ -1,4 +1,4 @@
-#include "../../libc/stdio/stdio.h"
+#include <stdio.h>
 
 void hexdump(int *address,int len){
     int i;

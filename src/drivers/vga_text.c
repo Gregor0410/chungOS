@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include "ports.h"
-#include "../libc/string/string.h"
+#include <string.h>
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 #define VGA_RAM 0xc00b8000

@@ -1,4 +1,4 @@
-#include "string.h"
+#include "../include/string.h"
 #include <stddef.h>
 
 char *strcpy (char *dest, const char *src)

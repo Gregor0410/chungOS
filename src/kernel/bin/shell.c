@@ -1,5 +1,5 @@
-#include "../../libc/stdio/stdio.h"
-#include "../../libc/string/string.h"
+#include <stdio.h>
+#include <string.h>
 
 void shell(){
     while(1){

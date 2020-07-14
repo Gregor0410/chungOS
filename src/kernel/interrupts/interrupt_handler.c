@@ -1,5 +1,5 @@
 #include "../kernel.h"
-#include "../../libc/stdio/stdio.h"
+#include <stdio.h>
 #include "../../drivers/ports.h"
 #include "interrupts.h"
 
