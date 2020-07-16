@@ -1,2 +1,2 @@
-break kernel_main
+break merge_free_blocks
 

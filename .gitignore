@@ -4,3 +4,4 @@
 /iso
 /src/sysroot/usr/lib/libk.a
 /src/libc/lib/libk.a
+/.vscode

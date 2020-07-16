@@ -22,5 +22,6 @@ SECTIONS {
        *(.bss)
        _ebss = .;
    }
+   . = ALIGN(16);
    _kernel_end = . ;
 }
